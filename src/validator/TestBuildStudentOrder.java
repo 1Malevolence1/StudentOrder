@@ -16,9 +16,11 @@ import java.util.List;
 
 public class TestBuildStudentOrder {
     public static void main(String[] args) throws Exception {
-        StudentOrder s = buildStudentOrder(10);
+        StudentOrder studentOrder = buildStudentOrder(10);
         StudentOrderDao dao = new StudentDaoImpl();
-        dao.saveStudentOrder(s);
+        Long id = dao.saveStudentOrder(studentOrder);
+        System.out.println(id);
+       // dao.saveStudentOrder(s);
         }
         private static long saveStudentOrder(StudentOrder studentOrder){
         long answer = 199;
