@@ -10,6 +10,28 @@ public class Adult extends Person {
     private String passprotNumber;
     private LocalDate issueDate;
 
+    private String passportNumber;
+
+    private RegisterOffice issueDepartment;
+
+    public Adult(){
+        super();
+
+    }
+
+    public Adult(String surname, String giveName, String patronymic, LocalDate dateOfBirth, Address address
+    ) {
+        super(surname, giveName, patronymic, dateOfBirth, address);
+    }
+
+    public RegisterOffice getRegisterOffice() {
+        return issueDepartment;
+    }
+
+    public void setRegisterOffice(RegisterOffice issueDepartment) {
+        this.issueDepartment = issueDepartment;
+    }
+
     public String getPassportSeria() {
         return passportSeria;
     }
@@ -24,18 +46,6 @@ public class Adult extends Person {
 
     public void setPassportNumber(String passportNumber) {
         this.passportNumber = passportNumber;
-    }
-
-    private String passportNumber;
-
-    public Adult(){
-        super();
-
-    }
-
-    public Adult(String surname, String giveName, String patronymic, LocalDate dateOfBirth, Address address
-                 ) {
-        super(surname, giveName, patronymic, dateOfBirth, address);
     }
 
 

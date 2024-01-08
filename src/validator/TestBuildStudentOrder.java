@@ -55,8 +55,24 @@ public class TestBuildStudentOrder {
             wife.setStudentID("" + (20000 + id));
             wife.setAddress(address);
 
+
+            Child child1 = new Child("Петрова", "Ирина", "Викторона",LocalDate.of(2018,6,29));
+            child1.setCertificateNumber("" + (30000 + id));
+            child1.setIssueDate(LocalDate.of(2018,7,19));
+            RegisterOffice ro2 = new RegisterOffice(2L,"","");
+            child1.setIssueDepartment(ro2);
             studentOrder.setHusband(husband);
             studentOrder.setWife(wife);
+            child1.setAddress(address);
+
+            Child child2 = new Child("Петров", "Евгений", "Викторович",LocalDate.of(2018,6,29));
+            child2.setCertificateNumber("" + (30000 + id));
+            child2.setIssueDate(LocalDate.of(2018,7,19));
+            RegisterOffice ro3 = new RegisterOffice(2L,"","");
+            child2.setIssueDepartment(ro3);
+            studentOrder.setHusband(husband);
+            studentOrder.setWife(wife);
+            child2.setAddress(address);
 
             return studentOrder;
         }
