@@ -23,7 +23,7 @@ public class DictionaryDaoImpl<T> implements DictionaryDao{
 
 
 
-    // TODO refactoring - make one method
+
     private Connection getConnection() throws SQLException {
         return DriverManager.getConnection(
                 Config.getProperty(Config.DB_URL),
