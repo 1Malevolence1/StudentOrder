@@ -11,11 +11,11 @@ abstract public class Person {
 
     private Address address;
 
-    public Person(String name, String surName, String middleName, LocalDate dageOfBirth,
-                  Address address) {
+    public Person(String name, String surname, String patronymic, LocalDate dageOfBirth, Address address
+                  ) {
         this.name = name;
-        this.surname = surName;
-        this.name = middleName;
+        this.surname = surname;
+        this.patronymic = patronymic;
         this.dageOfBirth = dageOfBirth;
         this.address = address;
     }
@@ -43,6 +43,8 @@ abstract public class Person {
     public String getPatronymic() {
         return patronymic;
     }
+
+
 
     public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;

@@ -4,8 +4,6 @@ public class Street {
     private Long streetCode;
     private String streetName;
 
-
-
     public Street() {
 
     }

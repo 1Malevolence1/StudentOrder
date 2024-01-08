@@ -8,7 +8,7 @@ public class Child extends Person {
     private RegisterOffice issueDepartment;
 
     public Child(String name, String surName, String middleName, LocalDate dageOfBirth, Address address) {
-        super(name, surName, middleName, dageOfBirth, address);
+        super(name, surName, middleName, dageOfBirth,address);
 
     }
 

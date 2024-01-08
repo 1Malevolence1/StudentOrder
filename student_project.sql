@@ -33,6 +33,7 @@ CREATE TABLE jc_register_office(
   FOREIGN KEY (r_office_area_id) REFERENCES jc_country_struct(area_id) ON DELETE CASCADE
 );
 
+@TODO исправить ошибку с улицами
 CREATE TABLE jc_student_order(
     student_order_id SERIAL,
 
@@ -72,8 +73,6 @@ CREATE TABLE jc_student_order(
     marriage_date date not null,
 
     PRIMARY KEY(student_order_id),
-    FOREIGN KEY(h_street_code) REFERENCES jc_street(street_code) ON DELETE CASCADE,
-    FOREIGN KEY(w_street_code) REFERENCES jc_street(street_code) ON DELETE CASCADE,
     FOREIGN KEY(register_office_id) REFERENCES jc_register_office(r_office_id) ON DELETE CASCADE
 );
 
