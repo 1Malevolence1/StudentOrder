@@ -70,9 +70,13 @@ public class TestBuildStudentOrder {
             child2.setIssueDate(LocalDate.of(2018,7,19));
             RegisterOffice ro3 = new RegisterOffice(2L,"","");
             child2.setIssueDepartment(ro3);
+            child2.setAddress(address);
+
+            studentOrder.addChild(child1);
+            studentOrder.addChild(child2);
             studentOrder.setHusband(husband);
             studentOrder.setWife(wife);
-            child2.setAddress(address);
+
 
             return studentOrder;
         }

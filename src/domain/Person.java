@@ -20,6 +20,14 @@ abstract public class Person {
         this.address = address;
     }
 
+    public Person(String name, String surname, String patronymic, LocalDate dageOfBirth){
+        this.name = name;
+        this.surname = surname;
+        this.patronymic = patronymic;
+        this.dageOfBirth = dageOfBirth;
+
+    }
+
     public Person() {
 
     }
