@@ -49,39 +49,31 @@ public class StudentDaoImpl implements StudentOrderDao {
         long result = -1L;
         try (Connection connection = getConnection();
              PreparedStatement stmt = getStmt(connection, INSERT_ODER, new String[]{"student_order_id"})) {
+            // Header
+            stmt.setInt(1, StudentOrderStatus.START.ordinal());
+            stmt.setTimestamp(2, java.sql.Timestamp.valueOf(LocalDateTime.now()));
+            // Husband
 
-            connection.setAutoCommit(false);
-            try {
-                // Header
-                stmt.setInt(1, StudentOrderStatus.START.ordinal());
-                stmt.setTimestamp(2, java.sql.Timestamp.valueOf(LocalDateTime.now()));
-                // Husband
-
-                setParamsAdult(stmt, 3, so.getHusband());
-                setParamsAdult(stmt, 16, so.getWife());
+            setParamsAdult( stmt, 3, so.getHusband());
+            setParamsAdult(stmt,16,so.getWife());
 
 
-                // Marriage
-                stmt.setString(29, so.getMarriageCertificateId());
-                stmt.setLong(30, so.getMarriageOffice().getOfficeId());
-                stmt.setDate(31, java.sql.Date.valueOf(so.getMarriageDate()));
+            // Marriage
+            stmt.setString(29, so.getMarriageCertificateId());
+            stmt.setLong(30, so.getMarriageOffice().getOfficeId());
+            stmt.setDate(31,java.sql.Date.valueOf(so.getMarriageDate()));
 
-                stmt.executeUpdate();
+            stmt.executeUpdate();
 
-                ResultSet gkRs = stmt.getGeneratedKeys();
-                if (gkRs.next()) {
-                    result = gkRs.getLong(1);
-                }
-                gkRs.close();
-
-                saveChildren(so, result, getStmt(connection, INSERT_CHILD));
-
-                connection.commit();
-            } catch (SQLException ex) {
-                connection.rollback();
-                throw ex;
+            ResultSet gkRs = stmt.getGeneratedKeys();
+            if(gkRs.next()){
+                result = gkRs.getLong(1);
             }
-        } catch (SQLException ex)  {
+
+            saveChildren( so, result,getStmt(connection,INSERT_CHILD));
+
+        gkRs.close();
+        } catch (SQLException ex) {
             throw new DaoException(ex);
         }
         return result;
