@@ -95,8 +95,9 @@ public class StudentDaoImpl implements StudentOrderDao {
              ) {
                 stmt.setLong(1, soId);
                 setParamsForChild(stmt, child);
-                stmt.executeUpdate();
+                stmt.addBatch(); // накапливание
         }
+        stmt.executeBatch();
     }
 
     private void setParamsForChild(PreparedStatement stmt, Child child) throws SQLException {
@@ -123,8 +124,4 @@ public class StudentDaoImpl implements StudentOrderDao {
         stmt.setString(start + 2, person.getPatronymic());
         stmt.setDate(start + 3, Date.valueOf(person.getDageOfBirth()));
     }
-
-
-    
-
 }
