@@ -35,6 +35,7 @@ public class StudentOrderValidator {
     }
 
     public void checkOneOrder(StudentOrder so) {
+
         AnswerCityRegister cityRegister = checkCityRegister(so);
     }
 

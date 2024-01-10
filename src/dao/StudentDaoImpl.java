@@ -95,7 +95,7 @@ public class StudentDaoImpl implements StudentOrderDao {
              ) {
                 stmt.setLong(1, soId);
                 setParamsForChild(stmt, child);
-                stmt.addBatch(); // накапливание
+                stmt.addBatch(); // накапливание пакета. Улучшает производительность
         }
         stmt.executeBatch();
     }
