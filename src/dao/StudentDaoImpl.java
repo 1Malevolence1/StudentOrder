@@ -6,6 +6,9 @@ import exception.DaoException;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class StudentDaoImpl implements StudentOrderDao {
     private static final String INSERT_ODER =
@@ -31,7 +34,10 @@ public class StudentDaoImpl implements StudentOrderDao {
     private static final String INSERT_CHILD = "INSERT INTO jc_student_child(" +
             "student_order_id, c_sur_name, c_give_name, c_patronymic, c_date_of_birth, c_certificate_seria, c_certificate_date, c_register_office_id, c_post_index, c_street_code, c_building, c_extension, c_apartment)" +
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-//
+
+
+
+    private static  final String SELECT_ORDER = "SELECT * FROM jc_student_order WHERE student_order_status = 0 ORDER BY student_order_date";
     private Connection getConnection() throws SQLException {
         return DriverManager.getConnection(
                 Config.getProperty(Config.DB_URL),
@@ -78,6 +84,31 @@ public class StudentDaoImpl implements StudentOrderDao {
             throw new DaoException(ex);
         }
         return result;
+    }
+
+    @Override
+    public List<StudentOrder> getStudentOrder() throws DaoException, SQLException {
+        List<StudentOrder> listStudentOrder = new LinkedList<>();
+        try (Connection connection = getConnection();
+             PreparedStatement stmt = getStmt(connection, SELECT_ORDER)){
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                StudentOrder studentOrder = new StudentOrder();
+                fillStudentOrder(rs, studentOrder);
+            }
+
+
+        }catch (SQLException ex) {
+            throw new DaoException();
+        }
+        return listStudentOrder;
+    }
+
+    private void fillStudentOrder(ResultSet rs, StudentOrder studentOrder) throws SQLException {
+        studentOrder.setStudentOrderID(rs.getLong("student_order_id"));
+        studentOrder.setStudentOrderDate(rs.getTimestamp("student_order_date").toLocalDateTime());
+        studentOrder.setStudentOrderStatus(StudentOrderStatus.fromValue(rs.getInt("student_order_status")));
     }
 
     private void setParamsAdult( PreparedStatement stmt, int start, Adult adult) throws SQLException {

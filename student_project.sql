@@ -44,7 +44,6 @@ CREATE TABLE jc_register_office(
 
 CREATE TABLE jc_student_order(
     student_order_id SERIAL,
-
     student_order_date timestamp not null,
     student_order_status int not null,
 
