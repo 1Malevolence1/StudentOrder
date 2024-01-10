@@ -97,6 +97,7 @@ public class StudentDaoImpl implements StudentOrderDao {
                 StudentOrder studentOrder = new StudentOrder();
                 fillStudentOrder(rs, studentOrder);
                 fillWedding(rs,studentOrder);
+                listStudentOrder.add(studentOrder);
             }
 
 

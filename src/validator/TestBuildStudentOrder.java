@@ -19,8 +19,14 @@ public class TestBuildStudentOrder {
         StudentOrder studentOrder = buildStudentOrder(10);
         StudentOrderDao dao = new StudentDaoImpl();
         Long id = dao.saveStudentOrder(studentOrder);
-        System.out.println(id);
+        // System.out.println(id);
        // dao.saveStudentOrder(s);
+
+        List<StudentOrder> list = dao.getStudentOrder();
+        for (StudentOrder so: list
+             ) {
+            System.out.println(so.getStudentOrderID());
+        }
         }
         private static long saveStudentOrder(StudentOrder studentOrder){
         long answer = 199;
@@ -34,7 +40,7 @@ public class TestBuildStudentOrder {
             studentOrder.setMarriageDate(LocalDate.of(2016,7,4));
 
             RegisterOffice ro = new RegisterOffice(1L, "", "");
-            studentOrder.setMarriageOffice(ro);
+            studentOrder.setRegisterOffice(ro);
 
             Street street = new Street(1L, "First street");
             Address address = new Address("195000", street, "12", "", "142  ");
