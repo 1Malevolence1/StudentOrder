@@ -3,7 +3,9 @@ DROP TABLE IF EXISTS jc_student_order;
 DROP TABLE IF EXISTS jc_passport_office;
 DROP TABLE IF EXISTS jc_register_office;
 DROP TABLE IF EXISTS jc_country_struct;
+DROP TABLE IF EXISTS jc_university;
 DROP TABLE IF EXISTS jc_street;
+
 
 CREATE TABLE jc_street(
   street_code integer not null,
@@ -89,8 +91,7 @@ CREATE TABLE jc_student_order(
     FOREIGN KEY(h_university_id) REFERENCES jc_university(university_id) ON DELETE RESTRICT,
     FOREIGN KEY(w_street_code) REFERENCES jc_street(street_code) ON DELETE RESTRICT,
     FOREIGN KEY(w_passport_office_id) REFERENCES jc_passport_office(p_office_id) ON DELETE RESTRICT,
-    FOREIGN KEY(w_university_id) REFERENCES jc_university(university_id) ON DELETE RESTRICT
-);
+    FOREIGN KEY(w_university_id) REFERENCES jc_university(university_id) ON DELETE RESTRICT);
 
 
 CREATE TABLE jc_student_child(

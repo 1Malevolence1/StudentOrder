@@ -68,10 +68,6 @@ abstract public class Person {
 
 
 
-    public void setStudentID(String studentID) {
-        studentID = studentID;
-    }
-
     public Address getAddress() {
         return address;
     }

@@ -4,6 +4,9 @@ import java.time.LocalDate;
 
 public class Adult extends Person {
     private String passportSeria;
+
+
+
     private String studentID;
 
     private University university;
@@ -73,5 +76,13 @@ public class Adult extends Person {
 
     public void setUniversity(University university) {
         this.university = university;
+    }
+
+    public String getStudentID() {
+        return studentID;
+    }
+
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
     }
 }
