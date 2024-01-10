@@ -11,6 +11,12 @@ CREATE TABLE jc_street(
   PRIMARY KEY (street_code)
 );
 
+CREATE TABLE jc_university(
+  university_id integer not null,
+  university_name varchar(300),
+  PRIMARY KEY (university_id)
+);
+
 CREATE TABLE jc_country_struct(
   area_id char(12) not null,
   area_name varchar(200),
@@ -33,7 +39,7 @@ CREATE TABLE jc_register_office(
   FOREIGN KEY (r_office_area_id) REFERENCES jc_country_struct(area_id) ON DELETE CASCADE
 );
 
-@TODO исправить ошибку с улицами
+
 CREATE TABLE jc_student_order(
     student_order_id SERIAL,
 
@@ -53,6 +59,8 @@ CREATE TABLE jc_student_order(
     h_building varchar(10) not null,
     h_extension varchar(10),
     h_apartment varchar(10),
+    h_university_id integer not null,
+    h_student_number varchar(30) not null,
 
     w_sur_name varchar(100) not null,
     w_give_name varchar(100) not null,
@@ -67,13 +75,21 @@ CREATE TABLE jc_student_order(
     w_building varchar(10) not null,
     w_extension varchar(10),
     w_apartment varchar(10),
+    w_university_id integer not null,
+    w_student_number varchar(30) not null,
 
     certificate_id varchar(20) not null,
     register_office_id integer not null,
     marriage_date date not null,
 
     PRIMARY KEY(student_order_id),
-    FOREIGN KEY(register_office_id) REFERENCES jc_register_office(r_office_id) ON DELETE CASCADE
+    FOREIGN KEY(h_street_code) REFERENCES jc_street(street_code) ON DELETE RESTRICT,
+    FOREIGN KEY(register_office_id) REFERENCES jc_register_office(r_office_id) ON DELETE RESTRICT,
+    FOREIGN KEY(h_passport_office_id) REFERENCES jc_passport_office(p_office_id) ON DELETE RESTRICT,
+    FOREIGN KEY(h_university_id) REFERENCES jc_university(university_id) ON DELETE RESTRICT,
+    FOREIGN KEY(w_street_code) REFERENCES jc_street(street_code) ON DELETE RESTRICT,
+    FOREIGN KEY(w_passport_office_id) REFERENCES jc_passport_office(p_office_id) ON DELETE RESTRICT,
+    FOREIGN KEY(w_university_id) REFERENCES jc_university(university_id) ON DELETE RESTRICT
 );
 
 
@@ -100,6 +116,18 @@ CREATE TABLE jc_student_child(
 );
 
 
+INSERT INTO jc_street(street_code, street_name) VALUES
+(1, 'Улица Садовая'),
+(2, 'Невский проспект'),
+(3, 'Улина Нежнова'),
+(4, 'Улина Козлова');
+
+
+INSERT INTO jc_university(university_id, university_name) VALUES
+(1, 'Пятигорский Городской Университет'),
+(2, 'РОССИЙСКИЙ ЭКОНОМИЧЕСКИЙ УНИВЕРСИТЕТ ИМ. Г.В. ПЛЕХАНОВА'),
+(3, 'Северо-Кавказский Федеральный Университет');
+
 INSERT INTO jc_country_struct (area_id, area_name) VALUES
   ('010000000000', 'Город'),
   ('010000100000', 'Город Район 1'),
@@ -121,10 +149,7 @@ INSERT INTO jc_country_struct (area_id, area_name) VALUES
   ('020020010002', 'Край Область 2 Район 1 Поселение 2'),
 
   ('020020020001', 'Край Область 2 Район 2 Поселение 1'),
-  ('020020020002', 'Край Область 2 Район 2 Поселение 2'),
-
-
-
+  ('020020020002', 'Край Область 2 Район 2 Поселение 2');
 
 
 INSERT INTO jc_passport_office (p_office_id, p_office_area_id, p_office_name) VALUES(1,'010000100000', 'Пасспортный стол 1 района 2 города');

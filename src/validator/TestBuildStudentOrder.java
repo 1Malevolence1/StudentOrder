@@ -46,6 +46,7 @@ public class TestBuildStudentOrder {
             PassportOffice po1 = new PassportOffice(1L,"","");
             husband.setStudentID("" + (10000 + id));
             husband.setUniversity(new University(2L,""));
+            husband.setStudentID("HH12345");
             husband.setAddress(address);
 
             Adult wife = new Adult("Петрова", "Вероника", "Андреева",LocalDate.of(1998,3,12), address);
@@ -54,7 +55,8 @@ public class TestBuildStudentOrder {
             wife.setIssueDate(LocalDate.of(2018, 3, 12));
             PassportOffice po2 = new PassportOffice(2L,"","");
             wife.setStudentID("" + (20000 + id));
-            wife.setUniversity(new University(2L,""));
+            wife.setStudentID("WW12345");
+            wife.setUniversity(new University(1L,""));
             wife.setAddress(address);
 
 
