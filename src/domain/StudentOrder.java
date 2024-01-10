@@ -18,8 +18,16 @@ public class StudentOrder {
 
     private StudentOrderStatus studentOrderStatus;
     private String marriageCertificateId;
-    private RegisterOffice marriageOffice;
 
+    private RegisterOffice registerOffice;
+
+    public RegisterOffice getRegisterOffice() {
+        return registerOffice;
+    }
+
+    public void setRegisterOffice(RegisterOffice registerOffice) {
+        this.registerOffice = registerOffice;
+    }
     public LocalDateTime getStudentOrderDate() {
         return studentOrderDate;
     }
@@ -97,11 +105,5 @@ public class StudentOrder {
         this.children = child;
     }
 
-    public RegisterOffice getMarriageOffice() {
-        return marriageOffice;
-    }
 
-    public void setMarriageOffice(RegisterOffice marriageOffice) {
-        this.marriageOffice = marriageOffice;
-    }
 }

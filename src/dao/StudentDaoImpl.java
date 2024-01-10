@@ -67,7 +67,7 @@ public class StudentDaoImpl implements StudentOrderDao {
 
             // Marriage
             stmt.setString(33, so.getMarriageCertificateId());
-            stmt.setLong(34, so.getMarriageOffice().getOfficeId());
+            stmt.setLong(34, so.getRegisterOffice().getOfficeId());
             stmt.setDate(35,java.sql.Date.valueOf(so.getMarriageDate()));
 
             stmt.executeUpdate();
@@ -96,6 +96,7 @@ public class StudentDaoImpl implements StudentOrderDao {
             while (rs.next()) {
                 StudentOrder studentOrder = new StudentOrder();
                 fillStudentOrder(rs, studentOrder);
+                fillWedding(rs,studentOrder);
             }
 
 
@@ -103,6 +104,15 @@ public class StudentDaoImpl implements StudentOrderDao {
             throw new DaoException();
         }
         return listStudentOrder;
+    }
+
+    private void fillWedding(ResultSet rs, StudentOrder studentOrder) throws SQLException {
+        studentOrder.setMarriageCertificateId(rs.getString("certificate_id"));
+        studentOrder.setMarriageDate(rs.getDate("marriage_date").toLocalDate());
+
+        Long id = rs.getLong("register_office_id");
+        RegisterOffice office = new RegisterOffice(id,"","");
+        studentOrder.setRegisterOffice(office);
     }
 
     private void fillStudentOrder(ResultSet rs, StudentOrder studentOrder) throws SQLException {
