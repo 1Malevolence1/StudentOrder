@@ -16,9 +16,9 @@ import java.util.List;
 
 public class TestBuildStudentOrder {
     public static void main(String[] args) throws Exception {
-        StudentOrder studentOrder = buildStudentOrder(10);
+        // StudentOrder studentOrder = buildStudentOrder(10);
         StudentOrderDao dao = new StudentDaoImpl();
-        Long id = dao.saveStudentOrder(studentOrder);
+        //Long id = dao.saveStudentOrder(studentOrder);
         // System.out.println(id);
        // dao.saveStudentOrder(s);
 
@@ -50,6 +50,7 @@ public class TestBuildStudentOrder {
             husband.setPassportNumber("" + (10000 + id));
             husband.setIssueDate(LocalDate.of(2017, 4, 5));
             PassportOffice po1 = new PassportOffice(1L,"","");
+            husband.setPassportOffice(po1);
             husband.setStudentID("" + (10000 + id));
             husband.setUniversity(new University(2L,""));
             husband.setStudentID("HH12345");
@@ -60,6 +61,7 @@ public class TestBuildStudentOrder {
             wife.setPassportNumber("" + (20000 + id));
             wife.setIssueDate(LocalDate.of(2018, 3, 12));
             PassportOffice po2 = new PassportOffice(2L,"","");
+            wife.setPassportOffice(po2);
             wife.setStudentID("" + (20000 + id));
             wife.setStudentID("WW12345");
             wife.setUniversity(new University(1L,""));

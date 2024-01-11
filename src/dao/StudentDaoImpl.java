@@ -97,6 +97,12 @@ public class StudentDaoImpl implements StudentOrderDao {
                 StudentOrder studentOrder = new StudentOrder();
                 fillStudentOrder(rs, studentOrder);
                 fillWedding(rs,studentOrder);
+
+                Adult husband = fillingAdult(rs, "h_");
+                Adult wife = fillingAdult(rs, "w_");
+                studentOrder.setHusband(husband);
+                studentOrder.setWife(wife);
+
                 listStudentOrder.add(studentOrder);
             }
 
@@ -105,6 +111,35 @@ public class StudentDaoImpl implements StudentOrderDao {
             throw new DaoException();
         }
         return listStudentOrder;
+    }
+
+    private Adult fillingAdult(ResultSet rs, String pref) throws SQLException {
+        Adult adult = new Adult();
+        adult.setSurname(rs.getString(pref + "sur_name"));
+        adult.setName(rs.getString(pref + "give_name"));
+        adult.setPatronymic(rs.getString(pref + "patronymic"));
+        adult.setDageOfBirth(rs.getDate(pref + "date_of_birth").toLocalDate());
+        adult.setPassportSeria(rs.getString(pref + "passport_seria"));
+        adult.setPassportNumber(rs.getString(pref + "passport_number"));
+        adult.setIssueDate(rs.getDate(pref + "passport_date").toLocalDate());
+
+        PassportOffice passportOffice = new PassportOffice(rs.getLong(pref + "passport_office_id"), "","");
+        adult.setPassportOffice(passportOffice);
+
+        Address address = new Address();
+        Street street = new Street(rs.getLong(pref + "street_code"), "");
+        address.setStreet(street);
+        address.setPastCode(rs.getString(pref + "post_index"));
+        address.setBuilding(rs.getString(pref + "building"));
+        address.setExtension(rs.getString(pref + "extension"));
+        address.setApartment(rs.getString(pref + "apartment"));
+        adult.setAddress(address);
+
+        University university = new University(rs.getLong(pref + "university_id"), "");
+        adult.setUniversity(university);
+        adult.setStudentID(rs.getString(pref + "student_number"));
+
+        return adult;
     }
 
     private void fillWedding(ResultSet rs, StudentOrder studentOrder) throws SQLException {
