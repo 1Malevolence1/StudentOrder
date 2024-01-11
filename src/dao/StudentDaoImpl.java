@@ -37,7 +37,9 @@ public class StudentDaoImpl implements StudentOrderDao {
 
 
 
-    private static  final String SELECT_ORDER = "SELECT * FROM jc_student_order WHERE student_order_status = 0 ORDER BY student_order_date";
+    private static  final String SELECT_ORDER = "SELECT so.*, ro.r_office_area_id, ro.r_office_name FROM jc_student_order so " +
+            "INNER JOIN jc_register_office ro ON ro.r_office_id = so.register_office_id " +
+            "WHERE student_order_status = 0 ORDER BY student_order_date";
     private Connection getConnection() throws SQLException {
         return DriverManager.getConnection(
                 Config.getProperty(Config.DB_URL),
@@ -148,7 +150,10 @@ public class StudentDaoImpl implements StudentOrderDao {
         studentOrder.setMarriageDate(rs.getDate("marriage_date").toLocalDate());
 
         Long id = rs.getLong("register_office_id");
-        RegisterOffice office = new RegisterOffice(id,"","");
+        String areaId = rs.getString("r_office_area_id");
+        String officeName = rs.getString("r_office_name");
+
+        RegisterOffice office = new RegisterOffice(id,areaId,officeName);
         studentOrder.setRegisterOffice(office);
     }
 
