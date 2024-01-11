@@ -158,13 +158,29 @@ public class StudentDaoImpl implements StudentOrderDao {
         studentOrder.setStudentOrderStatus(StudentOrderStatus.fromValue(rs.getInt("student_order_status")));
     }
 
+    private void saveChildren(StudentOrder so, Long soId, PreparedStatement stmt) throws SQLException {
+        for (Child child: so.getChildren()
+        ) {
+            stmt.setLong(1, soId);
+            setParamsForChild(stmt, child);
+            stmt.addBatch(); // накапливание пакета. Улучшает производительность
+        }
+        stmt.executeBatch();
+    }
+
     private void setParamsAdult( PreparedStatement stmt, int start, Adult adult) throws SQLException {
         setParamsForPerson(stmt, start, adult);
-        setPassportForAdult(stmt, 7, adult);
-        stmt.setLong(start + 7, 6);
+        setPassportForAdult(stmt, start + 4, adult);
+        setParamsPassportOffice(stmt, start + 7, adult);
         setParamsForAddress(stmt, start + 8, adult);
         setParamsForUniversity(stmt, start + 13, adult);
     }
+
+  private void setParamsPassportOffice(PreparedStatement stmt, int start, Adult adult) throws SQLException{
+      PassportOffice passportOffice = adult.getPassportOffice();
+      stmt.setLong(start, passportOffice.getOfficeId());
+  }
+
 
 
     private void setPassportForAdult(PreparedStatement stmt, int start, Adult adult) throws SQLException {
@@ -174,16 +190,6 @@ public class StudentDaoImpl implements StudentOrderDao {
         stmt.setDate(start + 2, Date.valueOf(passport.getIssueDate()));
     }
 
-
-    private void saveChildren(StudentOrder so, Long soId, PreparedStatement stmt) throws SQLException {
-        for (Child child: so.getChildren()
-             ) {
-                stmt.setLong(1, soId);
-                setParamsForChild(stmt, child);
-                stmt.addBatch(); // накапливание пакета. Улучшает производительность
-        }
-        stmt.executeBatch();
-    }
 
     private void setParamsForChild(PreparedStatement stmt, Child child) throws SQLException {
         setParamsForPerson(stmt, 2, child);

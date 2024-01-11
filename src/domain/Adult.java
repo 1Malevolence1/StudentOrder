@@ -13,8 +13,6 @@ public class Adult extends Person {
     private PassportOffice passportOffice;
 
 
-    private RegisterOffice issueDepartment;
-
     public Adult(){
         super();
 
@@ -26,18 +24,11 @@ public class Adult extends Person {
         this.passport = passport;
     }
 
-    public RegisterOffice getRegisterOffice() {
-        return issueDepartment;
-    }
-
-    public void setRegisterOffice(RegisterOffice issueDepartment) {
-        this.issueDepartment = issueDepartment;
-    }
-
 
     public PassportOffice getPassportOffice() {
         return passportOffice;
     }
+
 
     public void setPassportOffice(PassportOffice passportOffice) {
         this.passportOffice = passportOffice;
