@@ -15,8 +15,8 @@ public class RealCityRegisterChecker{
     public CityRegisterResponse checkPerson(Person person) throws CityRegisterException, TransportException {
         if(person instanceof Adult){
             Adult adult = (Adult) person;
-            if(adult.getPassportSeria().equals(SER_PASSPORT_HUSBAND) ||
-                    adult.getPassportSeria().equals(SER_PASSPORT_WIFE)){
+            if(adult.getPassport().getSeries().equals(SER_PASSPORT_HUSBAND) ||
+                    adult.getPassport().getSeries().equals(SER_PASSPORT_WIFE)){
                 CityRegisterResponse res = new CityRegisterResponse();
                 res.setExisting(true);
                 res.setTemporal(false);

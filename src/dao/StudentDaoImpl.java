@@ -87,7 +87,7 @@ public class StudentDaoImpl implements StudentOrderDao {
     }
 
     @Override
-    public List<StudentOrder> getStudentOrder() throws DaoException, SQLException {
+    public List<StudentOrder> getStudentOrder() throws SQLException {
         List<StudentOrder> listStudentOrder = new LinkedList<>();
         try (Connection connection = getConnection();
              PreparedStatement stmt = getStmt(connection, SELECT_ORDER)){
@@ -108,7 +108,7 @@ public class StudentDaoImpl implements StudentOrderDao {
 
 
         }catch (SQLException ex) {
-            throw new DaoException();
+            throw new SQLException();
         }
         return listStudentOrder;
     }
@@ -119,9 +119,10 @@ public class StudentDaoImpl implements StudentOrderDao {
         adult.setName(rs.getString(pref + "give_name"));
         adult.setPatronymic(rs.getString(pref + "patronymic"));
         adult.setDageOfBirth(rs.getDate(pref + "date_of_birth").toLocalDate());
-        adult.setPassportSeria(rs.getString(pref + "passport_seria"));
-        adult.setPassportNumber(rs.getString(pref + "passport_number"));
-        adult.setIssueDate(rs.getDate(pref + "passport_date").toLocalDate());
+
+        Passport passport = new Passport(rs.getString(pref + "passport_seria"), rs.getString(pref + "passport_number"),
+                rs.getDate(pref + "passport_date").toLocalDate());
+        adult.setPassport(passport);
 
         PassportOffice passportOffice = new PassportOffice(rs.getLong(pref + "passport_office_id"), "","");
         adult.setPassportOffice(passportOffice);
@@ -159,14 +160,19 @@ public class StudentDaoImpl implements StudentOrderDao {
 
     private void setParamsAdult( PreparedStatement stmt, int start, Adult adult) throws SQLException {
         setParamsForPerson(stmt, start, adult);
-        stmt.setString(start + 4, adult.getPassportSeria());
-        stmt.setString(start + 5, adult.getPassportNumber());
-        stmt.setDate(start + 6, Date.valueOf(adult.getIssueDate()));
+        setPassportForAdult(stmt, 7, adult);
         stmt.setLong(start + 7, 6);
         setParamsForAddress(stmt, start + 8, adult);
         setParamsForUniversity(stmt, start + 13, adult);
     }
 
+
+    private void setPassportForAdult(PreparedStatement stmt, int start, Adult adult) throws SQLException {
+        Passport passport = adult.getPassport();
+        stmt.setString(start, passport.getSeries());
+        stmt.setString(start + 1, passport.getNumber());
+        stmt.setDate(start + 2, Date.valueOf(passport.getIssueDate()));
+    }
 
 
     private void saveChildren(StudentOrder so, Long soId, PreparedStatement stmt) throws SQLException {

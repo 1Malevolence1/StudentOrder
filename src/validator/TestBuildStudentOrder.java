@@ -45,27 +45,26 @@ public class TestBuildStudentOrder {
             Street street = new Street(1L, "First street");
             Address address = new Address("195000", street, "12", "", "142  ");
 
-            Adult husband = new Adult("Петров", "Виктор", "Сергеевич",LocalDate.of(1997,8,24), address);
-            husband.setPassportSeria("" + (1000+id));
-            husband.setPassportNumber("" + (10000 + id));
-            husband.setIssueDate(LocalDate.of(2017, 4, 5));
+            Passport husband_passport = new Passport("" + (1000+id), "" + (10000 + id), LocalDate.of(2017, 4, 5));
+
+            Adult husband = new Adult("Петров", "Виктор", "Сергеевич",LocalDate.of(1997,8,24), address,husband_passport);
             PassportOffice po1 = new PassportOffice(1L,"","");
             husband.setPassportOffice(po1);
             husband.setStudentID("" + (10000 + id));
             husband.setUniversity(new University(2L,""));
             husband.setStudentID("HH12345");
             husband.setAddress(address);
+            husband.setPassport(husband_passport);
 
-            Adult wife = new Adult("Петрова", "Вероника", "Андреева",LocalDate.of(1998,3,12), address);
-            wife.setPassportSeria("" + (2000+id));
-            wife.setPassportNumber("" + (20000 + id));
-            wife.setIssueDate(LocalDate.of(2018, 3, 12));
+            Passport wife_passport = new Passport("" + (2000+id),"" + (2000+id), LocalDate.of(2018, 3, 12));
+            Adult wife = new Adult("Петрова", "Вероника", "Андреева",LocalDate.of(1998,3,12), address, wife_passport);
             PassportOffice po2 = new PassportOffice(2L,"","");
             wife.setPassportOffice(po2);
             wife.setStudentID("" + (20000 + id));
             wife.setStudentID("WW12345");
             wife.setUniversity(new University(1L,""));
             wife.setAddress(address);
+            wife.setPassport(wife_passport);
 
 
             Child child1 = new Child("Петрова", "Ирина", "Викторона",LocalDate.of(2018,6,29));
