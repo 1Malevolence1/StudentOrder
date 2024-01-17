@@ -171,7 +171,7 @@ public class StudentDaoImpl implements StudentOrderDao {
         );
         child.setRegisterOffice(registerOffice);
 
-        child.setAddress(getAddress(rs, "c_", child));
+        child.setAddress(fillAddress(rs, "c_", child));
 
         return child;
     }
@@ -190,7 +190,7 @@ public class StudentDaoImpl implements StudentOrderDao {
         PassportOffice passportOffice = new PassportOffice(rs.getLong(pref + "passport_office_id"), "", "");
         adult.setPassportOffice(passportOffice);
 
-        getAddress(rs, pref, adult);
+        adult.setAddress(fillAddress(rs, pref, adult));
 
         University university = new University(rs.getLong(pref + "university_id"), "");
         adult.setUniversity(university);
@@ -199,7 +199,7 @@ public class StudentDaoImpl implements StudentOrderDao {
         return adult;
     }
 
-    private Address getAddress(ResultSet rs, String pref, Person person) throws SQLException {
+    private Address fillAddress(ResultSet rs, String pref, Person person) throws SQLException {
         Address address = new Address();
         Street street = new Street(rs.getLong(pref + "street_code"), "");
         address.setStreet(street);
