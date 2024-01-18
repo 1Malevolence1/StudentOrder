@@ -86,7 +86,7 @@ public class StudentDaoImpl implements StudentOrderDao {
     }
 
     @Override
-    public Long saveStudentOrder(StudentOrder so) throws DaoException, SQLException {
+    public void saveStudentOrder(StudentOrder so) throws DaoException, SQLException {
         long result = -1L;
         try (Connection connection = getConnection();
              PreparedStatement stmt = getStmt(connection, INSERT_ODER, new String[]{"student_order_id"})) {
@@ -117,7 +117,7 @@ public class StudentDaoImpl implements StudentOrderDao {
         } catch (SQLException ex) {
             throw new DaoException(ex);
         }
-        return result;
+
     }
 
     @Override
@@ -131,8 +131,11 @@ public class StudentDaoImpl implements StudentOrderDao {
             Map<Long, StudentOrder> maps = new HashMap<>();
 
             stmt.setInt(1, StudentOrderStatus.START.ordinal());
-            stmt.setInt(2, Integer.parseInt(Config.getProperty(Config.DB_LIMIT)));
+            int limit = Integer.parseInt(Config.getProperty(Config.DB_LIMIT));
+            stmt.setInt(2, limit);
             ResultSet rs= stmt.executeQuery();
+
+            int count = 0;
 
             while (rs.next()) {
                 Long id = rs.getLong("student_order_id");
@@ -150,8 +153,15 @@ public class StudentDaoImpl implements StudentOrderDao {
                     listStudentOrder.add(studentOrder);
                     maps.put(id,studentOrder);
                 }
+
                 StudentOrder studentOrder = maps.get(id);
                 studentOrder.addChild(fillChild(rs));
+
+                count++;
+            }
+
+            if(count >= limit){
+                listStudentOrder.remove(listStudentOrder.size() - 1);
             }
 
         } catch (SQLException ex) {
