@@ -111,8 +111,9 @@ CREATE TABLE jc_student_child(
      c_apartment varchar(10),
 
      PRIMARY KEY(student_child_id),
-     FOREIGN KEY(c_street_code) REFERENCES jc_street(street_code) ON DELETE CASCADE,
-     FOREIGN KEY(c_register_office_id) REFERENCES jc_register_office(r_office_id) ON DELETE CASCADE
+  //   FOREIGN KEY(student_order_id) REFERENCES jc_student_order(student_order_id) ON DELETE RESTRICT,
+     FOREIGN KEY(c_street_code) REFERENCES jc_street(street_code) ON DELETE RESTRICT,
+     FOREIGN KEY(c_register_office_id) REFERENCES jc_register_office(r_office_id) ON DELETE RESTRICT
 );
 
 
@@ -167,6 +168,7 @@ INSERT INTO jc_register_office (r_office_id, r_office_area_id, r_office_name) VA
 INSERT INTO jc_register_office (r_office_id, r_office_area_id, r_office_name) VALUES(5,'020020010001','ЗАГС  Пасспортный стол Область 2 район 1 поселение 1');
 INSERT INTO jc_register_office (r_office_id, r_office_area_id, r_office_name) VALUES(6,'020020020002','ЗАГС Пасспортный стол Область 2 район 2 поселение 2');
 
+CREATE INDEX idx_student_order on jc_student_order(student_order_status)
 
 
-
+CREATE INDEX idx_student_order_id on jc_student_child(student_order_status)

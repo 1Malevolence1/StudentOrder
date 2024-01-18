@@ -16,11 +16,11 @@ import java.util.List;
 
 public class TestBuildStudentOrder {
     public static void main(String[] args) throws Exception {
-        // StudentOrder studentOrder = buildStudentOrder(10);
+     //  StudentOrder studentOrder = buildStudentOrder(10);
         StudentOrderDao dao = new StudentDaoImpl();
-        //Long id = dao.saveStudentOrder(studentOrder);
-        // System.out.println(id);
-       // dao.saveStudentOrder(s);
+    //   Long id = dao.saveStudentOrder(studentOrder);
+      //  System.out.println(id);
+
 
         List<StudentOrder> list = dao.getStudentOrder();
         for (StudentOrder so: list
@@ -71,7 +71,7 @@ public class TestBuildStudentOrder {
             child1.setCertificateNumber("" + (30000 + id));
             child1.setIssueDate(LocalDate.of(2018,7,19));
             RegisterOffice ro2 = new RegisterOffice(2L,"","");
-            child1.setIssueDepartment(ro2);
+            child1.setRegisterOffice(ro2);
             studentOrder.setHusband(husband);
             studentOrder.setWife(wife);
             child1.setAddress(address);
@@ -80,7 +80,7 @@ public class TestBuildStudentOrder {
             child2.setCertificateNumber("" + (30000 + id));
             child2.setIssueDate(LocalDate.of(2018,7,19));
             RegisterOffice ro3 = new RegisterOffice(2L,"","");
-            child2.setIssueDepartment(ro3);
+            child2.setRegisterOffice(ro3);
             child2.setAddress(address);
 
             studentOrder.addChild(child1);
