@@ -68,7 +68,7 @@ public class StudentDaoImpl implements StudentOrderDao {
                     "INNER JOIN jc_passport_office po_w ON po_w.p_office_id = so.w_passport_office_id " +
                     "INNER JOIN jc_student_child soc ON soc.student_order_id = so.student_order_id " +
                     "INNER JOIN jc_register_office ro_c ON ro_c.r_office_id = soc.c_register_office_id " +
-                    "WHERE student_order_status = ? ORDER BY so.student_order_id";
+                    "WHERE student_order_status = ? ORDER BY so.student_order_id LIMIT ?";
 
     private Connection getConnection() throws SQLException {
         return DriverManager.getConnection(
@@ -131,6 +131,7 @@ public class StudentDaoImpl implements StudentOrderDao {
             Map<Long, StudentOrder> maps = new HashMap<>();
 
             stmt.setInt(1, StudentOrderStatus.START.ordinal());
+            stmt.setInt(2, Integer.parseInt(Config.getProperty(Config.DB_LIMIT)));
             ResultSet rs= stmt.executeQuery();
 
             while (rs.next()) {
