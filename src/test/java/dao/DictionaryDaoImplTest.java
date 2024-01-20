@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DictionaryDaoImplTest {
     @Test
-    public void test(){
-        System.out.println("dfdf");
+    public void testExample(){
+        System.out.println("TEST");
     }
 }
