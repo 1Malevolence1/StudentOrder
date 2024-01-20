@@ -68,7 +68,7 @@ public class StudentDaoImpl implements StudentOrderDao {
                     "INNER JOIN jc_passport_office po_w ON po_w.p_office_id = so.w_passport_office_id " +
                     "INNER JOIN jc_student_child soc ON soc.student_order_id = so.student_order_id " +
                     "INNER JOIN jc_register_office ro_c ON ro_c.r_office_id = soc.c_register_office_id " +
-                    "WHERE student_order_status = ? ORDER BY so.student_order_id";
+                    "WHERE student_order_status = ? ORDER BY so.student_order_id LIMIT ?";
 
     private Connection getConnection() throws SQLException {
         return DriverManager.getConnection(
@@ -86,7 +86,7 @@ public class StudentDaoImpl implements StudentOrderDao {
     }
 
     @Override
-    public Long saveStudentOrder(StudentOrder so) throws DaoException, SQLException {
+    public void saveStudentOrder(StudentOrder so) throws DaoException, SQLException {
         long result = -1L;
         try (Connection connection = getConnection();
              PreparedStatement stmt = getStmt(connection, INSERT_ODER, new String[]{"student_order_id"})) {
@@ -117,7 +117,7 @@ public class StudentDaoImpl implements StudentOrderDao {
         } catch (SQLException ex) {
             throw new DaoException(ex);
         }
-        return result;
+
     }
 
     @Override
@@ -131,7 +131,11 @@ public class StudentDaoImpl implements StudentOrderDao {
             Map<Long, StudentOrder> maps = new HashMap<>();
 
             stmt.setInt(1, StudentOrderStatus.START.ordinal());
+            int limit = Integer.parseInt(Config.getProperty(Config.DB_LIMIT));
+            stmt.setInt(2, limit);
             ResultSet rs= stmt.executeQuery();
+
+            int count = 0;
 
             while (rs.next()) {
                 Long id = rs.getLong("student_order_id");
@@ -149,8 +153,15 @@ public class StudentDaoImpl implements StudentOrderDao {
                     listStudentOrder.add(studentOrder);
                     maps.put(id,studentOrder);
                 }
+
                 StudentOrder studentOrder = maps.get(id);
                 studentOrder.addChild(fillChild(rs));
+
+                count++;
+            }
+
+            if(count >= limit){
+                listStudentOrder.remove(listStudentOrder.size() - 1);
             }
 
         } catch (SQLException ex) {
