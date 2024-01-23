@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class StudentDaoImpl implements StudentOrderDao {
+public class StudentOrderDaoImpl implements StudentOrderDao {
     private static final String INSERT_ODER =
             "INSERT INTO jc_student_order(" +
                     " student_order_status, student_order_date, h_sur_name, " +
@@ -85,7 +85,7 @@ public class StudentDaoImpl implements StudentOrderDao {
     }
 
     @Override
-    public void saveStudentOrder(StudentOrder so) throws DaoException, SQLException {
+    public Long saveStudentOrder(StudentOrder so) throws DaoException, SQLException {
         long result = -1L;
         try (Connection connection = getConnection();
              PreparedStatement stmt = getStmt(connection, INSERT_ODER, new String[]{"student_order_id"})) {
@@ -117,6 +117,7 @@ public class StudentDaoImpl implements StudentOrderDao {
             throw new DaoException(ex);
         }
 
+        return result;
     }
 
     @Override

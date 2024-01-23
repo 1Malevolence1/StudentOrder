@@ -171,4 +171,3 @@ INSERT INTO jc_register_office (r_office_id, r_office_area_id, r_office_name) VA
 CREATE INDEX idx_student_order on jc_student_order(student_order_status)
 
 
-CREATE INDEX idx_student_order_id on jc_student_child(student_order_status)

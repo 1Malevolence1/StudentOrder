@@ -1,6 +1,6 @@
 package validator;
 
-import dao.StudentDaoImpl;
+import dao.StudentOrderDaoImpl;
 import dao.StudentOrderDao;
 import domain.*;
 
@@ -10,7 +10,7 @@ import java.util.List;
 public class TestBuildStudentOrder {
     public static void main(String[] args) throws Exception {
         // StudentOrder studentOrder = buildStudentOrder(10);
-        StudentOrderDao dao = new StudentDaoImpl();
+        StudentOrderDao dao = new StudentOrderDaoImpl();
         //Long id = dao.saveStudentOrder(studentOrder);
         // System.out.println(id);
        // dao.saveStudentOrder(s);
